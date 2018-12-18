@@ -81,6 +81,18 @@ RUN /work/configure.sh /work/configA.py <args> \
     && /work/configure.sh /work/configB.py <args>
 ```
 
+### Logging configuration
+
+By default, the Docker Hub image is using High Performance Extensible Logging (HPEL) mode and is outputing logs in JSON format. This logging configuration will make the docker container a lot easier to work with ELK stacks. 
+
+Alternatively, user can use basic logging mode is plain text format. You can switch the logging mode to basic via the following Dockerfile:
+
+```
+FROM ibmcom/websphere-traditional:latest
+ENV ENABLE_BASIC_LOGGING = true
+RUN /work/configure.sh
+```
+
 ### Runtime configuration
 
 How about properties that are dynamic and depend on the environment (eg: changing JAAS passwords or data source host at runtime)?  tWAS is not nearly as dynamic as Liberty, but we have augmented the `start_server` script to look into `/etc/websphere` for any property files that need to applied to the server.
